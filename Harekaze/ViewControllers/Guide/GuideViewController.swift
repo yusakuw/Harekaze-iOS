@@ -192,7 +192,8 @@ class GuideViewController: UIViewController {
 						$0.filter { $0.program!.startTime >= start && $0.program!.endTime < end }
 						}.map { $0.map {$0.program!} }
 						.filter {!$0.isEmpty}
-						.map { progs in
+						.map { progsUnordered in
+							let progs = progsUnordered.sorted { $0.startTime < $1.startTime }
 							var programs = progs as [Any & ProgramDuration]
 							progs.dropFirst().reversed().enumerated().forEach { (index, program) in
 								let before = progs[progs.count - index - 2]
